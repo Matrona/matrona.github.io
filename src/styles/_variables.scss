@@ -1,0 +1,108 @@
+// Global
+
+$body-font-family: "Montserrat", Helvetica, Roboto, Arial, sans-serif;
+$global-font-size: 14px;
+$global-line-height: 22px;
+
+$global-weight-light: 300;
+$global-weight-regular: 400;
+$global-weight-medium: 500;
+$global-weight-bold: 700;
+$global-weight-extrabold: 800;
+
+$global-transition: all 0.2s ease-out;
+
+// Colors
+
+$white: #ffffff;
+
+$black: #000000;
+$light-black: #212121;
+
+$grey: #484848;
+$light-grey: #b1b1b1;
+$pale-gray: #e7e7e7;
+
+$pink: #e91e74;
+$light-pink: #fc5792;
+$dark-pink: #a51548;
+
+$red: #930039;
+$dark-red: #770f32;
+
+$shadow-color: rgba(0, 0, 0, 0.25);
+
+// Form
+
+$placeholder-color: $grey;
+
+// Btn
+
+$btn-color: $dark-pink;
+$btn-color-hover: $dark-red;
+$btn-color-disabled: rgba(255, 255, 255, 0.5);
+
+$btn-white-color: $white;
+$btn-white-hover-color: $pale-gray;
+$btn-white-color-disabled: rgba(165, 21, 72, 0.5);
+
+// Mixins
+
+@mixin heading($base-font-size, $delta, $margin: $delta) {
+  font-size: $base-font-size;
+  line-height: $base-font-size + $delta;
+  margin: 0 0 $base-font-size + $margin;
+}
+
+@mixin box($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// offset positioning
+
+@function is-valid-length($value) {
+  @return (type-of($value) == "number" and not unitless($value)) or
+    (index(auto initial inherit 0, $value) != false);
+}
+
+@mixin position($position, $args: ()) {
+  $offsets: top right bottom left;
+  position: $position;
+  @each $offset in $offsets {
+    $index: index($args, $offset);
+    @if $index {
+      @if $index == length($args) {
+        #{$offset}: 0;
+      } @else {
+        $next: nth($args, $index + 1);
+        @if is-valid-length($next) {
+          #{$offset}: $next;
+        } @else if index($offsets, $next) {
+          #{$offset}: 0;
+        } @else {
+          @warn "Invalid value `#{$next}` for offset `#{$offset}`.";
+        }
+      }
+    }
+  }
+}
+
+// Shorthands
+// ---
+
+@mixin absolute($args: ()) {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: ()) {
+  @include position(fixed, $args);
+}
+
+@mixin relative($args: ()) {
+  @include position(relative, $args);
+}
+
+// Usage
+// @include absolute();
+// @include absolute(top 1em right 100%);
