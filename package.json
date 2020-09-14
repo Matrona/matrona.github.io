@@ -1,0 +1,26 @@
+{
+  "name": "abitoo",
+  "private": true,
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "eslint": "^5.12.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1"
+  },
+  "scripts": {
+    "eslint": "eslint -c .eslintrc.js ./src/scripts gulpfile.js"
+  },
+  "dependencies": {
+    "node-sass": "^4.13.0"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
+}
