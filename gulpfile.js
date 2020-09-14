@@ -1,4 +1,4 @@
-const { watch, series, parallel, src, dest } = require('gulp');
+const { watch, series, parallel, src, dest, gulp } = require('gulp');
 const sass = require('gulp-sass');
 const clean = require('gulp-clean');
 const pug = require('gulp-pug');
@@ -8,6 +8,7 @@ const cssnano = require('gulp-cssnano');
 const uglify = require('gulp-uglify');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require('gulp-htmlmin');
+var ghPages = require('gulp-gh-pages');
 
 function clean_app(cb) {
   src('./app', { allowEmpty: true }, {
@@ -127,6 +128,13 @@ function server(cb) {
   cb();
 }
 
+function deploy(cb) {
+  src('./build/**/*')
+    .pipe(ghPages());
+  cb();
+}
+
 exports.clean = parallel(clean_app, clean_build);
 exports.build = series(public_build, parallel(styles_build, scripts_build, images_build), views_build);
 exports.default = series(public, parallel(styles, scripts, images), views, server);
+exports.deploy = series(deploy);
